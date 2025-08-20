@@ -39,3 +39,8 @@
 /Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/obj/Debug/net9.0/EmployeeManagement.pdb
 /Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/obj/Debug/net9.0/EmployeeManagement.genruntimeconfig.cache
 /Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/obj/Debug/net9.0/ref/EmployeeManagement.dll
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/obj/Debug/net9.0/EmployeeManagement.MvcApplicationPartsAssemblyInfo.cs
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/Microsoft.OpenApi.dll
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll

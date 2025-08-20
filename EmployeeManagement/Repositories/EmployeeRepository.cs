@@ -28,18 +28,15 @@ namespace EmployeeManagement.Repositories
         }
         public async Task UpdateEmployeeAsync(Employee employee)
         {
-            // based on id.
+            // Matching based on employee.Id.
             _context.Employees.Update(employee);
             await _context.SaveChangesAsync();
         }
         public async Task DeleteEmployeeAsync(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
-            {
+            var employee = await _context.Employees.FindAsync(id) ??    
                 throw new KeyNotFoundException($"Employee with id {id} was not found.");
-            }
-
+                
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
         }
