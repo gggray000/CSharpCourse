@@ -1,5 +1,18 @@
-<nav>
-    <a routerLink="/">Home | </a>
-    <a routerLink="/create">Create Employee</a>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Employee Management</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" routerLink="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/create">Create Employee</a>
+            </li>
+        </ul>
+    </div>
+
 </nav>
-<router-outlet />
+
+<div class="container">
+    <router-outlet />
+</div>
