@@ -19,6 +19,10 @@ namespace EmployeeManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> CreateEmployee(Employee employee)
         {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest();
+            }
             await _employeeRepository.AddEmployeeAsync(employee); // EF will modify Id here, so it can be read later.
             return CreatedAtAction(nameof(GetEmployeeById), new { id = employee.Id }, employee);
         }
@@ -52,7 +56,7 @@ namespace EmployeeManagement.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Employee>> UpdateEmployeeAsync(int id, Employee employee)
         {
-            if (id != employee.Id)
+            if (id != employee.Id || ModelState.IsValid == false)
             {
                 return BadRequest();
             }

@@ -44,3 +44,8 @@
 /Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
 /Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/employee-management-frontend/angular.json
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/employee-management-frontend/package.json
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/employee-management-frontend/tsconfig.app.json
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/employee-management-frontend/tsconfig.json
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/EmployeeManagement/bin/Debug/net9.0/employee-management-frontend/tsconfig.spec.json

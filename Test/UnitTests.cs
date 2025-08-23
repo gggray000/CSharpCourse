@@ -108,6 +108,35 @@ public class UnitTests
         flight.BookingList.Should().NotContainEquivalentOf(new Booking(email: "g@g.com", numberOfSeats: 1));
     }
 
-    //TODO: test partially cancelation
+    [Theory]
+    [InlineData(10, 2, 3, 7)]
+    [InlineData(10, 2, 1, 9)]
+    [InlineData(2, 2, 1, 1)]
+    public void ChangeBookingWithMoreSeats(
+        int seatCapacity,
+        int oldNumberOfSeats,
+        int newNumberOfSeats,
+        int RemainingSeats
+        )
+    {
+        var flight = new Flight(seatCapacity: seatCapacity);
+        flight.Book(email: "g@g.com", numberOfSeats: oldNumberOfSeats);
+        flight.ChangeBooking(email: "g@g.com", newNumberOfSeats: newNumberOfSeats);
+        flight.BookingList.Should().ContainEquivalentOf(new Booking(email: "g@g.com", numberOfSeats: newNumberOfSeats));
+        flight.RemainingSeats.Should().Be(RemainingSeats);
+    }
+
+    [Fact]
+    public void ChangeBookingWithOverbookingError()
+    {
+        // Given
+        var flight = new Flight(seatCapacity: 3);
+        flight.Book(email: "g@g.com", numberOfSeats: 2);
+        // When
+        var error = flight.ChangeBooking(email: "g@g.com", newNumberOfSeats: 4);
+        // Then
+        error.Should().BeOfType<OverBookingError>();
+    }
+
 
 }

@@ -1,0 +1,12 @@
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/bin/Debug/net9.0/Domain.deps.json
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/bin/Debug/net9.0/Domain.dll
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/bin/Debug/net9.0/Domain.pdb
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/Domain.AssemblyInfoInputs.cache
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/Domain.AssemblyInfo.cs
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/Domain.csproj.CoreCompileInputs.cache
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/Domain.sourcelink.json
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/Domain.dll
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/refint/Domain.dll
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/Domain.pdb
+/Users/ganruilin/Desktop/CS/CSharp/CSharpCourse/Domain/obj/Debug/net9.0/ref/Domain.dll
