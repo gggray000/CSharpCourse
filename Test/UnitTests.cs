@@ -116,14 +116,14 @@ public class UnitTests
         int seatCapacity,
         int oldNumberOfSeats,
         int newNumberOfSeats,
-        int RemainingSeats
+        int ExpectedRemainingSeats
         )
     {
         var flight = new Flight(seatCapacity: seatCapacity);
         flight.Book(email: "g@g.com", numberOfSeats: oldNumberOfSeats);
         flight.ChangeBooking(email: "g@g.com", newNumberOfSeats: newNumberOfSeats);
         flight.BookingList.Should().ContainEquivalentOf(new Booking(email: "g@g.com", numberOfSeats: newNumberOfSeats));
-        flight.RemainingSeats.Should().Be(RemainingSeats);
+        flight.RemainingSeats.Should().Be(ExpectedRemainingSeats);
     }
 
     [Fact]
