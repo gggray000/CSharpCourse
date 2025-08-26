@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg bg-light">
+<body>
+  <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Flights</a>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -8,5 +9,15 @@
         </ul>
     </div>
 </nav>
+  <header class="mb-5 header"></header>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+  <footer class="pt-3 footer  bg-dark text-light text-center mt-5" style="margin-top: 62px;">
 
-<router-outlet />
+    <div>
+      <i>August 2025, Ray </i>
+    </div>
+
+  </footer>
+</body>
