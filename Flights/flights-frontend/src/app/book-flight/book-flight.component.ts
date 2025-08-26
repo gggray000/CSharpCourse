@@ -4,12 +4,13 @@ import { FlightService } from '../api/services';
 import { BookDto, FlightRm } from '../api/models';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-flight',
   standalone: true,
-  imports: [DatePipe, ReactiveFormsModule],
+  imports: [DatePipe, ReactiveFormsModule, CommonModule],
   templateUrl: './book-flight.component.html',
   styleUrl: './book-flight.component.css'
 })
@@ -19,7 +20,7 @@ export class BookFlightComponent implements OnInit {
   flight: FlightRm = {};
 
   form = this.fb.group({
-    number: [1]
+    number: [1, Validators.compose([Validators.required, Validators.min(1), Validators.max(253)])]
   })
 
   constructor(private route: ActivatedRoute,
@@ -56,6 +57,9 @@ export class BookFlightComponent implements OnInit {
   }
 
   book() {
+    if (this.form.invalid)
+      return;
+
     console.log(`Booking ${this.form.get('number')?.value} seats for flight: ${this.flight.id}`)
     const booking: BookDto = {
       flightId: this.flight.id,
@@ -68,6 +72,10 @@ export class BookFlightComponent implements OnInit {
         next: _ => this.router.navigate(['/my-booking']),
         error: err => this.handleError(err),
       })
+  }
+
+  get number() {
+    return this.form.controls.number;
   }
 
 }
