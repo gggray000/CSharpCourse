@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Flights.ReadModels;
+using Flights.Domain.Entities;
 using Flights.Dtos;
 
 namespace Flights.Controllers
@@ -11,13 +12,13 @@ namespace Flights.Controllers
         private readonly ILogger<FlightController> _logger;
         static Random random = new Random();
 
-        private static FlightRm[] flights = new FlightRm[]
+        private static Flight[] flights = new Flight[]
         {
         new (
             Guid.NewGuid(),
             "China Sountern",
-            new TimePlaceRm("Guangzhou",DateTime.Now.AddHours(random.Next(1, 3))),
-            new TimePlaceRm("Vienna",DateTime.Now.AddHours(random.Next(4, 10))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(1, 3))),
+            new TimePlace("Vienna",DateTime.Now.AddHours(random.Next(4, 10))),
             random.Next(1, 853),
             random.Next(2000, 5000).ToString()
         ),
@@ -25,8 +26,8 @@ namespace Flights.Controllers
         new (
             Guid.NewGuid(),
             "Lufthansa",
-            new TimePlaceRm("Berlin",DateTime.Now.AddHours(random.Next(1, 10))),
-            new TimePlaceRm("Guangzhou",DateTime.Now.AddHours(random.Next(4, 15))),
+            new TimePlace("Berlin",DateTime.Now.AddHours(random.Next(1, 10))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(4, 15))),
             random.Next(1, 853),
             random.Next(2000, 5000).ToString()
             ),
@@ -34,8 +35,8 @@ namespace Flights.Controllers
         new (
             Guid.NewGuid(),
             "China Sountern",
-            new TimePlaceRm("Guangzhou",DateTime.Now.AddHours(random.Next(1, 15))),
-            new TimePlaceRm("Changsha",DateTime.Now.AddHours(random.Next(4, 18))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(1, 15))),
+            new TimePlace("Changsha",DateTime.Now.AddHours(random.Next(4, 18))),
             random.Next(1, 853),
             random.Next(300, 800).ToString()
             ),
@@ -43,8 +44,8 @@ namespace Flights.Controllers
         new (
             Guid.NewGuid(),
             "Air China",
-            new TimePlaceRm("Beijing",DateTime.Now.AddHours(random.Next(1, 21))),
-            new TimePlaceRm("Guangzhou",DateTime.Now.AddHours(random.Next(4, 21))),
+            new TimePlace("Beijing",DateTime.Now.AddHours(random.Next(1, 21))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(4, 21))),
             random.Next(1, 853),
             random.Next(300, 800).ToString()
             ),
@@ -52,8 +53,8 @@ namespace Flights.Controllers
         new (
             Guid.NewGuid(),
              "China Eastern",
-            new TimePlaceRm("Shanghai",DateTime.Now.AddHours(random.Next(1, 23))),
-            new TimePlaceRm("Guangzhou",DateTime.Now.AddHours(random.Next(4, 25))),
+            new TimePlace("Shanghai",DateTime.Now.AddHours(random.Next(1, 23))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(4, 25))),
             random.Next(1, 853),
             random.Next(300, 800).ToString()
             ),
@@ -62,8 +63,8 @@ namespace Flights.Controllers
         new (
             Guid.NewGuid(),
             "China Sountern",
-            new TimePlaceRm("Changsha",DateTime.Now.AddHours(random.Next(1, 15))),
-            new TimePlaceRm("Shanghai",DateTime.Now.AddHours(random.Next(4, 19))),
+            new TimePlace("Changsha",DateTime.Now.AddHours(random.Next(1, 15))),
+            new TimePlace("Shanghai",DateTime.Now.AddHours(random.Next(4, 19))),
             random.Next(1, 853),
             random.Next(300, 800).ToString()
             ),
@@ -72,8 +73,8 @@ namespace Flights.Controllers
         new (
             Guid.NewGuid(),
             "Hainan Airlines",
-            new TimePlaceRm("Guangzhou",DateTime.Now.AddHours(random.Next(1, 55))),
-            new TimePlaceRm("Budapest",DateTime.Now.AddHours(random.Next(4, 58))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(1, 55))),
+            new TimePlace("Budapest",DateTime.Now.AddHours(random.Next(4, 58))),
             random.Next(1, 853),
             random.Next(2000, 4000).ToString()
             ),
@@ -82,14 +83,12 @@ namespace Flights.Controllers
         new (
             Guid.NewGuid(),
             "China Sountern",
-            new TimePlaceRm("Guangzhou",DateTime.Now.AddHours(random.Next(1, 58))),
-            new TimePlaceRm("Munich",DateTime.Now.AddHours(random.Next(4, 60))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(1, 58))),
+            new TimePlace("Munich",DateTime.Now.AddHours(random.Next(4, 60))),
             random.Next(1, 853),
             random.Next(2000, 4000).ToString()
             )
         };
-
-        private static IList<BookDto> Bookings = new List<BookDto>();
 
         public FlightController(ILogger<FlightController> logger)
         {
@@ -101,7 +100,23 @@ namespace Flights.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(IEnumerable<FlightRm>), 200)]
         public IEnumerable<FlightRm> Search()
-        => flights;
+        {
+            var flightRmList = flights.Select(flight =>
+                new FlightRm(
+            flight.Id,
+            flight.Airline,
+            new TimePlaceRm(
+                flight.Departure.place.ToString(),
+                flight.Departure.time),
+            new TimePlaceRm(
+                flight.Arrival.place.ToString(),
+                flight.Arrival.time),
+            flight.RemainingSeats,
+            flight.price
+            )).ToArray();
+
+            return flightRmList;
+        }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -113,7 +128,20 @@ namespace Flights.Controllers
             var flight = flights.SingleOrDefault(f => f.Id == id);
             if (flight == null)
                 return NotFound();
-            return Ok(flight);
+
+            var readModel = new FlightRm(
+                flight.Id,
+                flight.Airline,
+                new TimePlaceRm(
+                    flight.Departure.place.ToString(),
+                    flight.Departure.time),
+                new TimePlaceRm(
+                    flight.Arrival.place.ToString(),
+                    flight.Arrival.time),
+                flight.RemainingSeats,
+                flight.price
+                );
+            return Ok(readModel);
         }
 
         [HttpPost]
@@ -124,11 +152,17 @@ namespace Flights.Controllers
         public IActionResult Book(BookDto dto)
         {
             System.Diagnostics.Debug.WriteLine($"Booking a new flight {dto.FlightId}");
-            var flightFound = flights.Any(f => f.Id == dto.FlightId);
-            if (flightFound== false)
+            var flight = flights.SingleOrDefault(f => f.Id == dto.FlightId);
+            if (flight == null)
                 return NotFound();
 
-            Bookings.Add(dto);
+            flight.Bookings.Add(
+                new Booking(
+                    dto.FlightId,
+                    dto.Email,
+                    dto.NumberOfSeats
+                )
+            );
             return CreatedAtAction(nameof(Find), new { id = dto.FlightId }, dto);
 
         }
