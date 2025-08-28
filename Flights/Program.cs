@@ -1,4 +1,6 @@
 using Microsoft.OpenApi.Models;
+using Flights.Data;
+using Flights.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,90 @@ builder.Services.AddSwaggerGen(config =>
       + e.ActionDescriptor.RouteValues["controller"]}");
     });
 
+builder.Services.AddSingleton<Entities>();
+
 var app = builder.Build();
+
+var entities = app.Services.CreateScope().ServiceProvider.GetService<Entities>();
+var random = new Random();
+Flight[] flightsToSeed = new Flight[]{
+  new (
+            Guid.NewGuid(),
+            "China Sountern",
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(1, 3))),
+            new TimePlace("Vienna",DateTime.Now.AddHours(random.Next(4, 10))),
+            2,
+            random.Next(2000, 5000).ToString()
+        ),
+
+        new (
+            Guid.NewGuid(),
+            "Lufthansa",
+            new TimePlace("Berlin",DateTime.Now.AddHours(random.Next(1, 10))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(4, 15))),
+            random.Next(1, 853),
+            random.Next(2000, 5000).ToString()
+            ),
+
+        new (
+            Guid.NewGuid(),
+            "China Sountern",
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(1, 15))),
+            new TimePlace("Changsha",DateTime.Now.AddHours(random.Next(4, 18))),
+            random.Next(1, 853),
+            random.Next(300, 800).ToString()
+            ),
+
+        new (
+            Guid.NewGuid(),
+            "Air China",
+            new TimePlace("Beijing",DateTime.Now.AddHours(random.Next(1, 21))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(4, 21))),
+            random.Next(1, 853),
+            random.Next(300, 800).ToString()
+            ),
+
+        new (
+            Guid.NewGuid(),
+             "China Eastern",
+            new TimePlace("Shanghai",DateTime.Now.AddHours(random.Next(1, 23))),
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(4, 25))),
+            random.Next(1, 853),
+            random.Next(300, 800).ToString()
+            ),
+
+
+        new (
+            Guid.NewGuid(),
+            "China Sountern",
+            new TimePlace("Changsha",DateTime.Now.AddHours(random.Next(1, 15))),
+            new TimePlace("Shanghai",DateTime.Now.AddHours(random.Next(4, 19))),
+            random.Next(1, 853),
+            random.Next(300, 800).ToString()
+            ),
+
+
+        new (
+            Guid.NewGuid(),
+            "Hainan Airlines",
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(1, 55))),
+            new TimePlace("Budapest",DateTime.Now.AddHours(random.Next(4, 58))),
+            random.Next(1, 853),
+            random.Next(2000, 4000).ToString()
+            ),
+
+
+        new (
+            Guid.NewGuid(),
+            "China Sountern",
+            new TimePlace("Guangzhou",DateTime.Now.AddHours(random.Next(1, 58))),
+            new TimePlace("Munich",DateTime.Now.AddHours(random.Next(4, 60))),
+            random.Next(1, 853),
+            random.Next(2000, 4000).ToString()
+            )
+};
+
+entities.Flights.AddRange(flightsToSeed);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
