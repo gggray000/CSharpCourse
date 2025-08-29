@@ -41,7 +41,7 @@ namespace Flights.Controllers
                 flight.Arrival.place.ToString(),
                 flight.Arrival.time),
             flight.RemainingSeats,
-            flight.price
+            flight.Price
             )).ToArray();
 
             return flightRmList;
@@ -68,7 +68,7 @@ namespace Flights.Controllers
                     flight.Arrival.place.ToString(),
                     flight.Arrival.time),
                 flight.RemainingSeats,
-                flight.price
+                flight.Price
                 );
             return Ok(readModel);
         }
@@ -89,6 +89,7 @@ namespace Flights.Controllers
             if (error is OverbookError)
                 return Conflict(new { message = "Not enough remaining seats." });
 
+            _entities.SaveChanges();
             return CreatedAtAction(nameof(Find), new { id = dto.FlightId }, dto);
 
         }

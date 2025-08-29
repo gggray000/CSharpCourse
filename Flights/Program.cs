@@ -1,8 +1,15 @@
 using Microsoft.OpenApi.Models;
 using Flights.Data;
 using Flights.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add DbContext.
+builder.Services.AddDbContext<Entities>(options =>
+  options.UseInMemoryDatabase(databaseName: "Flights"),
+  ServiceLifetime.Singleton
+);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -106,6 +113,8 @@ Flight[] flightsToSeed = new Flight[]{
 };
 
 entities.Flights.AddRange(flightsToSeed);
+
+entities.SaveChanges();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

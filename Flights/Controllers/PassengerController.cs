@@ -32,23 +32,24 @@ namespace Flights.Controllers
                     dto.gender
                 )
             );
-            System.Diagnostics.Debug.WriteLine(_entities.Passengers.Count);
-            return CreatedAtAction(nameof(Find), new {email = dto.email}, dto);
+
+            _entities.SaveChanges();
+            return CreatedAtAction(nameof(Find), new { email = dto.email }, dto);
         }
 
         [HttpGet("{email}")]
         public ActionResult<PassengerRm> Find(string email)
         {
-            var passenger = _entities.Passengers.FirstOrDefault(p => p.email == email);
+            var passenger = _entities.Passengers.FirstOrDefault(p => p.Email == email);
 
             if (passenger == null)
                 return NotFound();
 
             var passengerRm = new PassengerRm(
-                passenger.email,
-                passenger.firstName,
-                passenger.lastName,
-                passenger.gender
+                passenger.Email,
+                passenger.FirstName,
+                passenger.LastName,
+                passenger.Gender
             );
 
             return Ok(passengerRm);
