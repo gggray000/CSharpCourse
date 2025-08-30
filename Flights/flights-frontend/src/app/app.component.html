@@ -1,14 +1,25 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Flights</a>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a class="nav-link active" routerLink="/">Home</a>
-            </li>
-        </ul>
+      <a class="navbar-brand" href="#">Flights</a>
+      <span>|</span>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/my-booking">My Bookings</a>
+        </li>
+        <li *ngIf="!email" class="nav-item">
+          <a class="nav-link active" routerLink="/register-passenger">Login</a>
+        </li>
+        <li *ngIf="email" class="nav-item">
+          <a class="nav-link active" (click)="logout(email)">Log Out</a>
+        </li>
+      </ul>
     </div>
-</nav>
+    <i *ngIf="email">Hello, {{email}}</i>
+  </nav>
   <header class="mb-5 header"></header>
   <div class="container">
     <router-outlet></router-outlet>

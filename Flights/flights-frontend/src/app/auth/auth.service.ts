@@ -14,6 +14,11 @@ export class AuthService {
     this.currentUser = user;
   }
 
+  logOut(user: User) {
+     console.log(user.email + " logged out.");
+    this.currentUser = undefined;
+  }
+
 }
 
 interface User {

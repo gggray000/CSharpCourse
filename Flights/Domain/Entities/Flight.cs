@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Flights.Domain.Errors;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Flights.Domain.Entities
 {
@@ -49,6 +50,21 @@ namespace Flights.Domain.Entities
             );
 
             this.RemainingSeats -= numberOfSeats;
+            return null;
+        }
+
+        public object? CancelBooking(string email, byte numberOfSeats)
+        {
+            var booking = Bookings.FirstOrDefault(
+                booking => booking.Email == email
+                && booking.NumberOfSeats == numberOfSeats
+                );
+
+            if (booking == null)
+                return new NotFoundError();
+
+            Bookings.Remove(booking);
+            RemainingSeats += numberOfSeats;
             return null;
         }
     }
