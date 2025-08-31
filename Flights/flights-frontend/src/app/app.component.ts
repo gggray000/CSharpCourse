@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { authGuard } from './auth/auth.guard';
 
 @Component({
   selector: 'app-root',

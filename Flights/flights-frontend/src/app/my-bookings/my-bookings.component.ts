@@ -4,7 +4,6 @@ import { BookingService } from '../api/services';
 import { AuthService } from '../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-bookings',
@@ -20,12 +19,9 @@ export class MyBookingsComponent {
   constructor(
     private bookingService: BookingService,
     private authService: AuthService,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
-    if (!this.authService.currentUser)
-      this.router.navigate(['/register-passenger'])
 
     this.bookingService.listBooking({ email: this.authService.currentUser?.email ?? '' })
       .subscribe(result => this.bookings = result);
