@@ -4,11 +4,11 @@ using Flights.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var cs = builder.Configuration.GetConnectionString("Flights");
 
 // Add DbContext.
 builder.Services.AddDbContext<Entities>(options =>
-  options.UseInMemoryDatabase(databaseName: "Flights"),
-  ServiceLifetime.Singleton
+  options.UseMySql(cs, ServerVersion.AutoDetect(cs))
 );
 
 // Add services to the container.
@@ -29,13 +29,19 @@ builder.Services.AddSwaggerGen(config =>
       + e.ActionDescriptor.RouteValues["controller"]}");
     });
 
-builder.Services.AddSingleton<Entities>();
+//builder.Services.AddSingleton<Entities>();
 
 var app = builder.Build();
 
 var entities = app.Services.CreateScope().ServiceProvider.GetService<Entities>();
+
+entities.Database.EnsureCreated();
+
 var random = new Random();
-Flight[] flightsToSeed = new Flight[]{
+
+if (!entities.Flights.Any())
+{
+ Flight[] flightsToSeed = new Flight[]{
   new (
             Guid.NewGuid(),
             "China Sountern",
@@ -112,9 +118,10 @@ Flight[] flightsToSeed = new Flight[]{
             )
 };
 
-entities.Flights.AddRange(flightsToSeed);
+  entities.Flights.AddRange(flightsToSeed);
 
-entities.SaveChanges();
+  entities.SaveChanges();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

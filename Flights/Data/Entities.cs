@@ -17,6 +17,7 @@ namespace Flights.Data
             modelBuilder.Entity<Flight>().OwnsOne(f => f.Departure);
             modelBuilder.Entity<Flight>().OwnsOne(f => f.Arrival);
             modelBuilder.Entity<Flight>().Property(f => f.RemainingSeats).IsConcurrencyToken();
+            modelBuilder.Entity<Flight>().OwnsMany(f => f.Bookings);
         }
         static Random random = new Random();
         public DbSet<Passenger> Passengers => Set<Passenger>();
