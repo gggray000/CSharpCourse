@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FlightService } from '../api/services';
 import { FlightRm } from '../api/models';
 import { RouterLink } from "@angular/router";
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search-flights',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './search-flights.component.html',
   styleUrl: './search-flights.component.css'
 })
@@ -17,12 +18,25 @@ export class SearchFlightsComponent implements OnInit {
 
   ]
 
-  constructor(private flightService: FlightService) { }
+  constructor(
+    private flightService: FlightService, 
+    private fb: FormBuilder
+  ) { }
 
-  ngOnInit(): void { }
+  searchForm = this.fb.nonNullable.group({
+    From: [''],
+    To: [''],
+    FromDate: [''],
+    ToDate: [''],
+    NumberOfPassenger: [1]
+  });
+
+  ngOnInit(): void {
+    this.search();
+   }
 
   search() {
-    this.flightService.searchFlight({})
+    this.flightService.searchFlight(this.searchForm.value)
       .subscribe({
         next: res => this.searchResult = res,
         error: err => this.handleError(err)

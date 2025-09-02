@@ -11,11 +11,21 @@ import { RequestBuilder } from '../../request-builder';
 import { FlightRm } from '../../models/flight-rm';
 
 export interface SearchFlight$Plain$Params {
+  From?: string;
+  To?: string;
+  FromDate?: string;
+  ToDate?: string;
+  NumberOfPassengers?: number;
 }
 
 export function searchFlight$Plain(http: HttpClient, rootUrl: string, params?: SearchFlight$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<FlightRm>>> {
   const rb = new RequestBuilder(rootUrl, searchFlight$Plain.PATH, 'get');
   if (params) {
+    rb.query('From', params.From, {});
+    rb.query('To', params.To, {});
+    rb.query('FromDate', params.FromDate, {});
+    rb.query('ToDate', params.ToDate, {});
+    rb.query('NumberOfPassengers', params.NumberOfPassengers, {});
   }
 
   return http.request(

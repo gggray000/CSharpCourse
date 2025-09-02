@@ -1,17 +1,19 @@
 <h5 class="text-md-center m-5">Search Result</h5>
 
-<div class="m-5 d-grid gap-3">
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+
+    <div class="m-5 d-grid gap-3">
 
     <div class="row">
         <div class="col">
             <div class="form-floating">
-                <input placeholder="From" class="form-control" />
+                <input formControlName="From" placeholder="From" class="form-control" />
                 <label class="text-primary form-label">From</label>
             </div>
         </div>
         <div class="col">
             <div class="form-floating">
-                <input placeholder="To" class="form-control" />
+                <input formControlName="To" placeholder="To" class="form-control" />
                 <label class="text-primary form-label">To</label>
             </div>
         </div>
@@ -20,13 +22,13 @@
     <div class="row">
         <div class="col">
             <div class="form-floating">
-                <input placeholder="From Da" class="form-control" type="date" />
+                <input formControlName="FromDate" placeholder="From Date" class="form-control" type="date" />
                 <label class="text-primaryte form-label">From Date</label>
             </div>
         </div>
         <div class="col">
             <div class="form-floating">
-                <input placeholder="To Date" class="form-control" type="date" />
+                <input formControlName="ToDate" placeholder="To Date" class="form-control" type="date" />
                 <label class="text-primary form-label">To Date</label>
             </div>
         </div>
@@ -39,10 +41,10 @@
         <div class="col">
             <div class="input-group">
                 <div class="input-group-text">For</div>
-                <input class="form-control" type="number" placeholder="1" />
+                <input formControlName="NumberOfPassenger" class="form-control" type="number" placeholder="1" />
                 <div class="input-group-text">Passengers</div>
 
-                <button (click)="search()" type="submit" class="btn-primary btn">
+                <button type="submit" class="btn-primary btn">
                     <i class="fas fa-search"></i>
                 </button>
 
@@ -50,6 +52,10 @@
         </div>
 
     </div>
+
+</div>
+
+</form>
 
     <div *ngFor="let flight of searchResult">
         <div class="card text-dark mt-5 text-center">
@@ -128,4 +134,5 @@
             </div>
 
         </div>
-    </div>
+
+    

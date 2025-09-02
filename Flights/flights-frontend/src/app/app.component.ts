@@ -14,13 +14,13 @@ import { authGuard } from './auth/auth.guard';
 export class AppComponent {
   title = 'flights-frontend';
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) { }
 
-   get email(): string {
+  get email(): string {
     return this.authService.currentUser?.email ?? '';
   }
 
-  logout(email: string){
-    this.authService.logOut({email});
+  logout(email: string) {
+    this.authService.logOut({ email });
   }
 }

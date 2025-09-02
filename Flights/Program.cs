@@ -41,7 +41,7 @@ var random = new Random();
 
 if (!entities.Flights.Any())
 {
- Flight[] flightsToSeed = new Flight[]{
+  Flight[] flightsToSeed = new Flight[]{
   new (
             Guid.NewGuid(),
             "China Sountern",

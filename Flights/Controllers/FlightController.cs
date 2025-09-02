@@ -22,28 +22,57 @@ namespace Flights.Controllers
         {
             _logger = logger;
             _entities = entities;
-            
+
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(IEnumerable<FlightRm>), 200)]
-        public IEnumerable<FlightRm> Search()
+        public IEnumerable<FlightRm> Search([FromQuery] FlightsSearchParameters @params)
         {
-            var flightRmList = _entities.Flights.Select(flight =>
+            _logger.LogInformation("Searching for flights to: {To}", @params.To);
+
+            IQueryable<Flight> flights = _entities.Flights;
+
+            if (!string.IsNullOrWhiteSpace(@params.From))
+                flights = flights
+                    .Where(flight => flight.Departure.place.Contains(@params.From));
+
+            if (!string.IsNullOrWhiteSpace(@params.To))
+                flights = flights
+                    .Where(flight => flight.Arrival.place.Contains(@params.To));
+
+            if (@params.FromDate != null)
+                flights = flights
+                    .Where(flight => flight.Departure.time >= @params.FromDate.Value.Date);
+
+            if (@params.ToDate != null)
+                flights = flights
+                    .Where(flight => flight.Departure.time >= @params.ToDate.Value.Date.AddDays(1).AddTicks(-1));
+
+            if (@params.NumberOfPassengers != null && @params.NumberOfPassengers != 0)
+                flights = flights
+                    .Where(flight => flight.RemainingSeats >= @params.NumberOfPassengers);
+            else
+                flights = flights
+                    .Where(flight => flight.RemainingSeats >= 1);
+
+            var flightRmList = flights
+            .Select(flight =>
                 new FlightRm(
-            flight.Id,
-            flight.Airline,
-            new TimePlaceRm(
-                flight.Departure.place.ToString(),
-                flight.Departure.time),
-            new TimePlaceRm(
-                flight.Arrival.place.ToString(),
-                flight.Arrival.time),
-            flight.RemainingSeats,
-            flight.Price
-            )).ToArray();
+                        flight.Id,
+                        flight.Airline,
+                        new TimePlaceRm(
+                            flight.Departure.place.ToString(),
+                            flight.Departure.time),
+                        new TimePlaceRm(
+                            flight.Arrival.place.ToString(),
+                            flight.Arrival.time),
+                        flight.RemainingSeats,
+                        flight.Price
+                    ))
+            .ToArray();
 
             return flightRmList;
         }
@@ -93,12 +122,12 @@ namespace Flights.Controllers
             try
             {
                 _entities.SaveChanges();
-             }
-            catch(DbUpdateConcurrencyException e)
+            }
+            catch (DbUpdateConcurrencyException e)
             {
                 return Conflict(new { message = "Error happened." });
             }
-            
+
             return CreatedAtAction(nameof(Find), new { id = dto.FlightId }, dto);
 
         }
