@@ -28,7 +28,8 @@ export class RegisterPassengerComponent implements OnInit {
     email: ['', Validators.compose([Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(100)])],
     firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30)])],
     lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30)])],
-    isFemale: [true, Validators.required]
+    isFemale: [true, Validators.required],
+    password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(30)])]
   })
 
   ngOnInit(): void {
@@ -43,7 +44,7 @@ export class RegisterPassengerComponent implements OnInit {
       .subscribe({
         next: _ => {
           console.log("Passenger exists, logging in now");
-          this.login();
+          this.router.navigate(['login-passenger']);
         },
         error: e => {
           if (e.status != 404)
@@ -58,15 +59,9 @@ export class RegisterPassengerComponent implements OnInit {
 
     this.passengerService.registerPassenger({ body: this.form.value })
       .subscribe({
-        next: this.login,
+        next: _ => this.router.navigate(['login-passenger']),
         error: console.error,
       });
   }
 
-  private login = () => {
-    this.authService.loginUser({
-      email: this.form.get('email')?.value ?? ''
-    });
-    this.router.navigate([this.requestedUrl ?? '/search-flights'])
-  }
 }

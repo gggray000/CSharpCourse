@@ -36,6 +36,17 @@
                 </div>
             </div>
 
+            <div class="form-floating">
+
+                <input formControlName="password" placeholder="Password" class="form-control" id="password"
+                    type="text" />
+                <label class="form-label" for="password">Password</label>
+                <div class="invalid-feedback d-block" *ngIf="form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)">
+                    <div *ngIf="form.controls.password.errors">
+                        Password is invalid
+                    </div>
+                </div>
+            </div>
 
             <div>
 
@@ -48,7 +59,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center center">
-            <button (click)="register()" type="submit" class="btn btn-primary">Login <i class="fa fa-sign-in"
+            <button (click)="register()" type="submit" class="btn btn-primary">Register <i class="fa fa-user"
                     aria-hidden="true"></i></button>
         </div>
     </div>

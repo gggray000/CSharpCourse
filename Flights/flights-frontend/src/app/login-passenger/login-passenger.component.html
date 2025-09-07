@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+    <div class="container d-grid gap-3" style="max-width: 700px;">
+
+        <div class="form-floating">
+            <input formControlName="email" placeholder="Email" class="form-control" type="text" />
+            <label for="email">Email</label>
+            <div class="invalid-feedback d-block" *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)">
+                <div *ngIf="form.controls.email.errors">
+                    Email is invalid
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-3">
+            <div class="form-floating">
+                <input formControlName="password" placeholder="Password" class="form-control" id="password"
+                    type="text" />
+                <label class="form-label" for="password">Password</label>
+                <div class="invalid-feedback d-block" *ngIf="form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)">
+                    <div *ngIf="form.controls.password.errors">
+                        Password is invalid
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center center">
+            <button (click)="login()" type="submit" class="btn btn-primary">Login <i class="fa fa-sign-in"
+                    aria-hidden="true"></i></button>
+        </div>
+    </div>
+
+</form>

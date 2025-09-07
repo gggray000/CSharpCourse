@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using Flights.Data;
 using Flights.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 var cs = builder.Configuration.GetConnectionString("Flights");
@@ -17,6 +18,10 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<IPasswordHasher<Passenger>, PasswordHasher<Passenger>>();
+
+//builder.Services.AddSingleton<Entities>();
+
 builder.Services.AddSwaggerGen(config =>
     {
       config.AddServer(new OpenApiServer
@@ -28,8 +33,6 @@ builder.Services.AddSwaggerGen(config =>
       config.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"]
       + e.ActionDescriptor.RouteValues["controller"]}");
     });
-
-//builder.Services.AddSingleton<Entities>();
 
 var app = builder.Build();
 

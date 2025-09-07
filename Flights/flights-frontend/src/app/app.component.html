@@ -11,7 +11,10 @@
           <a class="nav-link active" routerLink="/my-booking">My Bookings</a>
         </li>
         <li *ngIf="!email" class="nav-item">
-          <a class="nav-link active" routerLink="/register-passenger">Login</a>
+          <a class="nav-link active" routerLink="/register-passenger">Register</a>
+        </li>
+        <li *ngIf="!email" class="nav-item">
+          <a class="nav-link active" routerLink="/login-passenger">Login</a>
         </li>
         <li *ngIf="email" class="nav-item">
           <a class="nav-link active" (click)="logout(email)">Log Out</a>

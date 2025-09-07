@@ -21,6 +21,6 @@ export class AppComponent {
   }
 
   logout(email: string) {
-    this.authService.logOut({ email });
+    this.authService.logOut(email);
   }
 }
