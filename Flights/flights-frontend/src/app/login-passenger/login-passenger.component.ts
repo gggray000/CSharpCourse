@@ -23,6 +23,8 @@ constructor(
 
   requestedUrl?: string = undefined;
 
+  fieldTextType: boolean = false;
+
   form = this.fb.group({
     email: ['', Validators.compose([Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(100)])],
     password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(30)])]
@@ -32,10 +34,14 @@ constructor(
     this.activatedRoute.params.subscribe(p => this.requestedUrl = p['requestedUrl']);
   }
 
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
+  }
+
   login() {
     if (this.form.invalid)
       return;
-    
+
     this.authService.loginUser({ 
       email: this.form.get('email')?.value ?? '',
       password: this.form.get('password')?.value ?? '' 

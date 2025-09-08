@@ -11,16 +11,21 @@
             </div>
         </div>
 
-        <div class="d-grid gap-3">
-            <div class="form-floating">
-                <input formControlName="password" placeholder="Password" class="form-control" id="password"
-                    type="text" />
-                <label class="form-label" for="password">Password</label>
-                <div class="invalid-feedback d-block" *ngIf="form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)">
-                    <div *ngIf="form.controls.password.errors">
-                        Password is invalid
-                    </div>
-                </div>
+        <div class="input-group input-group-lg">
+            <input formControlName="password" placeholder="Password" class="form-control" id="password"  [type]="fieldTextType ? 'text' : 'password'"/>
+            <span class="input-group-text" id="hide-password">
+                <i class="fa"
+                     [ngClass]="{
+                    'fa-eye-slash': !fieldTextType,
+                    'fa-eye': fieldTextType
+                    }"
+                    (click)="toggleFieldTextType()"
+                ></i>
+            </span>
+            <div class="invalid-feedback d-block" *ngIf="form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)">
+                <div *ngIf="form.controls.password.errors">
+                      Password is invalid
+                 </div>
             </div>
         </div>
 

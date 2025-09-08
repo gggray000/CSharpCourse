@@ -24,6 +24,8 @@ export class RegisterPassengerComponent implements OnInit {
 
   requestedUrl?: string = undefined;
 
+  fieldTextType: boolean = false;
+
   form = this.fb.group({
     email: ['', Validators.compose([Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(100)])],
     firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30)])],
@@ -51,6 +53,10 @@ export class RegisterPassengerComponent implements OnInit {
             console.error(e);
         }
       })
+  }
+
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 
   register() {
